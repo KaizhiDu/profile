@@ -37,13 +37,13 @@ router.post(
         try {
             let user = await User.findOne({email});
             if (!user) {
-                return res.status(400).json({error: [{msg: 'Invalid Credentials'}]});
+                return res.status(400).json({errors: [{msg: 'Invalid Credentials'}]});
             }
 
             // we need to compare the token and user's password
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
-                return res.status(400).json({error: [{msg: 'Invalid Credentials'}]});
+                return res.status(400).json({errors: [{msg: 'Invalid Credentials'}]});
             }
             const payload = {
                 user: {

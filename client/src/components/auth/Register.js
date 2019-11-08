@@ -2,12 +2,13 @@
  * Created by Kaizhi Du on 2019/11/5.
  */
 import React, {Fragment, useState} from 'react';
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {setAlert} from "../../actions/alert";
+import {register} from '../../actions/auth';
 import PropTypes from 'prop-types';
 
-const Register = ({setAlert}) => {
+const Register = ({setAlert, register, isAuthenticated}) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -26,16 +27,20 @@ const Register = ({setAlert}) => {
         if (password !== password2) {
             setAlert("Password do not match", 'danger');
         }else {
-            console.log(formData);
+            register({name, email, password});
         }
     };
+
+    if (isAuthenticated) {
+        return <Redirect to='/dashboard'/>
+    }
 
     return <Fragment>
         <h1 className="large text-primary">Sign Up</h1>
         <p className="lead"><i className="fas fa-user"></i> Create Your Account</p>
         <form className="form" action="create-profile.html" onSubmit={e => onSubmit(e)}>
             <div className="form-group">
-                <input type="text" placeholder="Name" name="name" value={name} onChange={e => onChange(e)} required/>
+                <input type="text" placeholder="Name" name="name" value={name} onChange={e => onChange(e)} />
             </div>
             <div className="form-group">
                 <input type="email" placeholder="Email Address" name="email" value={email} onChange={e => onChange(e)}/>
@@ -49,7 +54,6 @@ const Register = ({setAlert}) => {
                     type="password"
                     placeholder="Password"
                     name="password"
-                    minLength="6"
                     value={password} onChange={e => onChange(e)}
                 />
             </div>
@@ -58,7 +62,6 @@ const Register = ({setAlert}) => {
                     type="password"
                     placeholder="Confirm Password"
                     name="password2"
-                    minLength="6"
                     value={password2} onChange={e => onChange(e)}
                 />
             </div>
@@ -70,8 +73,12 @@ const Register = ({setAlert}) => {
     </Fragment>;
 };
 
-Register.prototypes = {
-    setAlert: PropTypes.func.isRequired
-};
+// Register.prototypes = {
+//     setAlert: PropTypes.func.isRequired
+// };
 
-export default connect(null, {setAlert})(Register);
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, {setAlert, register})(Register);
