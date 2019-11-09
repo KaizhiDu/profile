@@ -58,7 +58,9 @@ router.post('/', authMiddleware,
         if (bio) profileFields.bio = bio;
         if (status) profileFields.status = status;
         if (githubusername) profileFields.githubusername = githubusername;
-        if (skills) {
+        if (skills instanceof Array) {
+            profileFields.skills = skills;
+        } else if (skills) {
             profileFields.skills = skills.split(',').map(skill => skill.trim());
         }
         // Build social object

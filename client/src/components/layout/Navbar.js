@@ -8,11 +8,6 @@ import {logout} from "../../actions/auth";
 
 const Navbar = ({logout, auth: {loading, isAuthenticated}}) => {
 
-    function userLogout() {
-        logout();
-        return <Redirect to='/'/>
-    }
-
     const authLinks = (
         <ul>
             <li>
@@ -24,7 +19,7 @@ const Navbar = ({logout, auth: {loading, isAuthenticated}}) => {
     const guestLinks = (
         <ul>
             <li>
-                <a href="profiles.html">Developers</a>
+                <a href="#">Developers</a>
             </li>
             <li>
                 <Link to="/register">Register</Link>
@@ -39,9 +34,13 @@ const Navbar = ({logout, auth: {loading, isAuthenticated}}) => {
         <div>
             <nav className="navbar bg-dark">
                 <h1>
-                    <Link to="/"><i className="fas fa-code"></i> DevConnector</Link>
+                    {
+                        isAuthenticated ? (<Fragment><Link to="/dashboard"><i className="fas fa-code"></i> DevConnector</Link></Fragment>)
+                            : (<Fragment><Link to="/"><i className="fas fa-code"></i> DevConnector</Link></Fragment>)
+                    }
+
                 </h1>
-                   <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+                <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
             </nav>
         </div>
     )
