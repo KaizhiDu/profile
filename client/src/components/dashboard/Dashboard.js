@@ -1,13 +1,15 @@
 /**
  * Created by Kaizhi Du on 2019/11/7.
  */
-import React, {Fragment, useEffect} from 'react';
-import {connect} from "react-redux";
-import {getCurrentProfile} from '../../actions/profile'
-import {Link} from "react-router-dom";
+import React, { Fragment, useEffect } from 'react';
+import { connect } from "react-redux";
+import { getCurrentProfile } from '../../actions/profile'
+import { Link } from "react-router-dom";
 import DashboardActions from "./DashboardActions";
+import Experience from "./Experience";
+import Education from "./Education";
 
-const Dashboard = ({getCurrentProfile, auth: {user}, profile: {profile}}) => {
+const Dashboard = ({ getCurrentProfile, auth: { user }, profile: { profile } }) => {
 
     useEffect(() => {
         getCurrentProfile();
@@ -21,9 +23,12 @@ const Dashboard = ({getCurrentProfile, auth: {user}, profile: {profile}}) => {
             </p>
             {
                 profile !== null ? (
-                    <Fragment>
-                        <DashboardActions/>
-                    </Fragment>
+                        <Fragment>
+                            <DashboardActions/>
+                            <Experience experience={profile.experience}/>
+                            <Education education={profile.education}/>
+
+                        </Fragment>
                     ) :
                     (<Fragment>
                         <p>You have not yet setup a profile, please add some info</p>
@@ -41,4 +46,4 @@ const mapStateToProps = state => ({
     profile: state.profile
 });
 
-export default connect(mapStateToProps, {getCurrentProfile})(Dashboard);
+export default connect(mapStateToProps, { getCurrentProfile })(Dashboard);
