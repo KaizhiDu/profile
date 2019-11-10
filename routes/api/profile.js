@@ -206,7 +206,7 @@ router.delete('/experience/:exp_id', authMiddleware, async (req, res) => {
 
 // router PUT api/profile/education
 // description: Create an education to profile
-router.put('/experience', authMiddleware,
+router.put('/education', authMiddleware,
     [
         check('school', 'School is required').not().isEmpty(),
         check('degree', 'Degree is required').not().isEmpty(),
