@@ -8,14 +8,15 @@ import { Link } from "react-router-dom";
 import DashboardActions from "./DashboardActions";
 import Experience from "./Experience";
 import Education from "./Education";
+import Spinner from "../layout/Spinner";
 
-const Dashboard = ({ getCurrentProfile, auth: { user }, profile: { profile } }) => {
+const Dashboard = ({ getCurrentProfile, auth: { user }, profile: { profile, loading } }) => {
 
     useEffect(() => {
         getCurrentProfile();
     }, []);
 
-    return (
+    return loading && profile === null ? <Spinner/> : (
         <Fragment>
             <h1 className='large text-primary'>Dashboard</h1>
             <p className='lead'>

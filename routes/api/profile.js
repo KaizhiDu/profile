@@ -22,7 +22,7 @@ router.get('/me', authMiddleware, async (req, res) => {
     }
 });
 
-// router POST api/profile/me
+// router POST api/profile/
 // description: save a profile
 router.post('/', authMiddleware,
     [

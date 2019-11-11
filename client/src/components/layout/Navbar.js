@@ -1,17 +1,24 @@
 /**
  * Created by Kaizhi Du on 2019/11/5.
  */
-import React, {Fragment} from 'react';
-import {Link, Redirect} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {logout} from "../../actions/auth";
+import React, { Fragment } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logout } from "../../actions/auth";
 
-const Navbar = ({logout, auth: {loading, isAuthenticated}}) => {
+const Navbar = ({ logout, auth: { loading, isAuthenticated } }) => {
 
     const authLinks = (
         <ul>
             <li>
-                <a onClick={logout}>Logout</a>
+                <Link to='/profiles'>
+                    <span className='hide-sm'>Developers</span>
+                </Link>
+            </li>
+            <li>
+                <a onClick={logout} href='#!'>
+                    <span className='hide-sm' className='hide-sm'>Logout</span>
+                </a>
             </li>
         </ul>
     );
@@ -19,7 +26,9 @@ const Navbar = ({logout, auth: {loading, isAuthenticated}}) => {
     const guestLinks = (
         <ul>
             <li>
-                <a href="#">Developers</a>
+                <Link to='/profiles'>
+                    <span className='hide-sm'>Developers</span>
+                </Link>
             </li>
             <li>
                 <Link to="/register">Register</Link>
@@ -50,4 +59,4 @@ const mapStateToProps = (state) => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, {logout})(Navbar);
+export default connect(mapStateToProps, { logout })(Navbar);
